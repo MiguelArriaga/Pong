@@ -6,6 +6,13 @@ let game = null;
 function setup() {
   angleMode(DEGREES);
   canvasSize = floor(min(windowWidth, windowHeight));
+  paddleLength = canvasSize / 5;
+  paddleWidth = canvasSize / 50;
+  ballSize = canvasSize / 25;
+  buttonHeight = canvasSize / 15;
+  ballSpeed = canvasSize/100;
+  // ballSpeed = canvasSize/350;
+  paddleSpeed = ballSpeed*1.5;
   createCanvas(canvasSize, canvasSize);
   game = new Game(1)
 }
@@ -13,6 +20,7 @@ function setup() {
 
 function draw() {
   background(0)
+  frameRate(60)
 
   if (game.isLive) {
     game.update()

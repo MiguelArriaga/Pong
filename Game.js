@@ -1,22 +1,24 @@
 
 class Game {
-  constructor(players=1,AIType="dumb") {
+  constructor(players = 1, AIType = "dumb") {
     this.players = players
     this.AIType = AIType
 
     this.playAgainBtn = new CanvasButton('Play Again');
     this.mvmtButtons = {};
-    this.mvmtButtons["B_UP"] = new CanvasButton('/\\', null, canvasSize * 4 / 5, canvasSize - 90, 30, 30);
-    this.mvmtButtons["B_DOWN"] = new CanvasButton('\\/', null, canvasSize * 4 / 5, canvasSize - 40, 30, 30);
-    
+    this.mvmtButtons["B_UP"] = new CanvasButton('/\\', null,
+      canvasSize * 4 / 5, canvasSize - 3*buttonHeight, buttonHeight, buttonHeight);
+    this.mvmtButtons["B_DOWN"] = new CanvasButton('\\/', null, 
+    canvasSize * 4 / 5, canvasSize - buttonHeight, buttonHeight,buttonHeight);
+
     this.resetGame();
   }
 
   resetGame() {
     this.isLive = true;
     this.playAgainBtn.isActive = false;
-    this.paddleA = new Paddle("left", this.players < 2,this.AIType);
-    this.paddleB = new Paddle("right", this.players < 1,this.AIType);
+    this.paddleA = new Paddle("left", this.players < 2, this.AIType);
+    this.paddleB = new Paddle("right", this.players < 1, this.AIType);
     this.nextPoint(0);
   }
 
@@ -31,7 +33,7 @@ class Game {
     this.ball = new Ball();
   }
 
-  winner(){
+  winner() {
     if (this.paddleA.score >= winPoints) {
       return "A"
     } else if (this.paddleB.score >= winPoints) {
@@ -56,7 +58,7 @@ class Game {
     if (point !== "N") {
       this.nextPoint(point)
     }
-    
+
     if (this.winner() !== "N") {
       this.isLive = false;
       this.playAgainBtn.isActive = true;
@@ -79,17 +81,17 @@ class Game {
   }
 
   drawPoints() {
-    textSize(32);
+    textSize(canvasSize/20);
     fill(255);
     noStroke();
     textAlign(CENTER, CENTER);
-    text(str(this.paddleA.score), 30, 35);
-    text(str(this.paddleB.score), canvasSize - 30, 35);
+    text(str(this.paddleA.score), buttonHeight, buttonHeight);
+    text(str(this.paddleB.score), canvasSize - buttonHeight, buttonHeight);
   }
 
   drawGameOver() {
     if (!this.isLive) {
-      textSize(32);
+      textSize(canvasSize/20);
       fill(255);
       noStroke();
       textAlign(CENTER, CENTER);
@@ -104,7 +106,7 @@ class Game {
       this.resetGame()
     }
   }
-  
+
 
   mousePressed() {
     if (mouseButton === LEFT || touches.length == 1) {
