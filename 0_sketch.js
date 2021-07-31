@@ -29,6 +29,16 @@ function draw() {
 }
 
 
+function touchStarted() {
+  mousePressed();
+  return false;
+}
+
+function touchEnded() {
+  mouseReleased();
+  return false;
+}
+
 
 function keyPressed() {
   game.keyPressed()

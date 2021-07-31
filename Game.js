@@ -7,9 +7,9 @@ class Game {
     this.playAgainBtn = new CanvasButton('Play Again');
     this.mvmtButtons = {};
     this.mvmtButtons["B_UP"] = new CanvasButton('/\\', null,
-      canvasSize * 4 / 5, canvasSize - 3*buttonHeight, buttonHeight, buttonHeight);
-    this.mvmtButtons["B_DOWN"] = new CanvasButton('\\/', null, 
-    canvasSize * 4 / 5, canvasSize - buttonHeight, buttonHeight,buttonHeight);
+      canvasSize * 4 / 5, canvasSize - 3 * buttonHeight, buttonHeight, buttonHeight);
+    this.mvmtButtons["B_DOWN"] = new CanvasButton('\\/', null,
+      canvasSize * 4 / 5, canvasSize - buttonHeight, buttonHeight, buttonHeight);
 
     this.resetGame();
   }
@@ -81,7 +81,7 @@ class Game {
   }
 
   drawPoints() {
-    textSize(canvasSize/20);
+    textSize(canvasSize / 20);
     fill(255);
     noStroke();
     textAlign(CENTER, CENTER);
@@ -91,7 +91,7 @@ class Game {
 
   drawGameOver() {
     if (!this.isLive) {
-      textSize(canvasSize/20);
+      textSize(canvasSize / 20);
       fill(255);
       noStroke();
       textAlign(CENTER, CENTER);
@@ -107,7 +107,6 @@ class Game {
     }
   }
 
-
   mousePressed() {
     if (mouseButton === LEFT || touches.length == 1) {
       this.playAgainBtn.possibleClickDown(mouseX, mouseY)
@@ -115,6 +114,7 @@ class Game {
       for (var btnk in this.mvmtButtons) {
         this.mvmtButtons[btnk].possibleClickDown(mouseX, mouseY);
       }
+      console.log("mousePressed")
     }
   }
 
