@@ -5,7 +5,7 @@ class Game {
     this.AIType = AIType
 
     this.playAgainBtn = new CanvasButton('Play Again');
-    this.playerBtn = new CanvasButton('1 Player', null, canvasSize / 2, buttonHeight * 0.5, buttonHeight*2, buttonHeight/2);
+    this.playerBtn = new CanvasButton('1 Player', null, canvasSize / 2, buttonHeight * 0.5, buttonHeight * 2, buttonHeight / 2);
     this.mvmtButtons = {};
     this.mvmtButtons["A_UP"] = getCircleBtn('/\\', null, buttonHeight, canvasSize - 2.2 * buttonHeight, buttonHeight);
     this.mvmtButtons["A_DOWN"] = getCircleBtn('\\/', null, buttonHeight, canvasSize - buttonHeight, buttonHeight);
@@ -127,13 +127,21 @@ class Game {
     }
   }
 
+  singlePress(x, y) {
+    this.playAgainBtn.possibleClickDown(x, y)
+    this.playerBtn.possibleClickDown(x, y)
+
+    for (var btnk in this.mvmtButtons) {
+      this.mvmtButtons[btnk].possibleClickDown(x, y);
+    }
+  }
+
   mousePressed() {
     if (mouseButton === LEFT || touches.length == 1) {
-      this.playAgainBtn.possibleClickDown(mouseX, mouseY)
-      this.playerBtn.possibleClickDown(mouseX, mouseY)
-
-      for (var btnk in this.mvmtButtons) {
-        this.mvmtButtons[btnk].possibleClickDown(mouseX, mouseY);
+      this.singlePress(mouseX, mouseY)
+    } else if (touches.length > 1) {
+      for (var tch of touches) {
+        this.singlePress(tch.x, tch.y);
       }
     }
   }
