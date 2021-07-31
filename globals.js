@@ -1,7 +1,7 @@
 // Constants
 let canvasSize
 
-let winPoints = 7;
+let winPoints = 2;
 let ballSpeed = 5;
 let ballAngle = 179;
 let paddleSpeed = ballSpeed*2;

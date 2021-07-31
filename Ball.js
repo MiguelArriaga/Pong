@@ -63,22 +63,22 @@ class Ball {
     }
   }
 
-  update() {
+  update(game) {
     this.x += this.vel[0];
     this.y += this.vel[1];
 
     this.wallReflect(-1, 0.0);
     this.wallReflect(1, canvasSize);
 
-    this.paddleReflect(-1, paddleA);
-    this.paddleReflect(1, paddleB);
+    this.paddleReflect(-1, game.paddleA);
+    this.paddleReflect(1, game.paddleB);
 
     if (this.canColide(this.x,1,canvasSize)) {
-      return 1
+      return "A" // A wins a point
     } else if (this.canColide(this.x,-1,0)){
-      return -1
+      return "B" // B wins a point
     } else {
-      return 0
+      return "N"
     }
   }
 

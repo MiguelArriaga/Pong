@@ -2,12 +2,15 @@
 
 
 class Paddle {
-  constructor(side,auto=false) {
+  constructor(side, auto = false, AIType = "dumb") {
+
     this.side = side;
+    this.auto = auto;
+    this.AIType = AIType;
+
     this.vel = paddleSpeed;
     this.dir = 0;
-    this.auto = auto
-    this.brain = new NeuralNetwork(2,7,1);
+    this.brain = new NeuralNetwork(2, 7, 1);
     this.score = 0;
 
     this.paddleLength = paddleLength;
@@ -32,13 +35,22 @@ class Paddle {
   }
 
   getAngle(y, dir) {
-    return dir * 45 * (y - this.y) / (this.paddleLength / 2)
+    return dir * 20 * (y - this.y) / (this.paddleLength / 2)
   }
 
-  update(ball_x_pos,ball_y_vel) {
+  update(ball) {
     if (this.auto) {
-      let input_values = [ball_x_pos/canvasSize,(ball_y_vel/ballSpeed+1)/2]
-      this.dir = round(this.brain.predict(input_values))
+
+      if (this.AIType === "dumb") {
+        let pos_diff = this.y - ball.y;
+        let direction = -Math.sign(pos_diff);
+        this.dir = direction * Math.min(Math.pow(abs(pos_diff) / canvasSize, 0.5), 1);
+
+      } else { //NN
+
+        let input_values = [ball.x / canvasSize, (ball.vel[1] / ballSpeed + 1) / 2]
+        this.dir = round(this.brain.predict(input_values))
+      }
     }
     this.y += this.vel * this.dir
 
