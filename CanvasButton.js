@@ -1,3 +1,10 @@
+function getCircleBtn(text, clickFunction  ,x,y,w){
+  let cb = new CanvasButton(text, clickFunction,x, y, w, w)
+  cb.isCircle = true;
+  return cb
+}
+
+
 class CanvasButton {
 
   constructor(txt, clickFunction, x = canvasSize / 2, y = canvasSize / 2, w = canvasSize / 5, h = canvasSize / 20) {
@@ -9,6 +16,7 @@ class CanvasButton {
     this.w = w;
     this.h = h;
     this.mode = CENTER;
+    this.isCircle = false;
     this.ctext = color(0);
     this.crect = color(255);
     this.ctext_hover = this.crect;
@@ -45,14 +53,18 @@ class CanvasButton {
   }
 
   contains(px, py) {
-    if (px > (this.x - this.w / 2) &&
+    if (this.isCircle) {
+      if (Math.pow(2*(this.x-px)/this.w,2)+Math.pow(2*(this.y-py)/this.w,2)<=1){
+        return true;
+      }
+    } else if (px > (this.x - this.w / 2) &&
       px < (this.x + this.w / 2) &&
       py > (this.y - this.h / 2) &&
       py < (this.y + this.h / 2)) {
       return true;
-    } else {
-      return false;
-    }
+    } 
+    return false;
+
   }
 
   possibleClickDown(px, py) {
@@ -89,8 +101,13 @@ class CanvasButton {
       fill(crect);
       stroke(ctext);
       strokeWeight(0.05 * min(this.w, this.h));
+      if (this.isCircle) {
+        ellipseMode(this.mode);
+        ellipse(this.x, this.y, this.w);
+      }else {
       rectMode(this.mode);
       rect(this.x, this.y, this.w, this.h);
+      }
       fill(ctext);
       noStroke();
       textStyle(BOLD);

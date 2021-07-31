@@ -5,11 +5,12 @@ class Game {
     this.AIType = AIType
 
     this.playAgainBtn = new CanvasButton('Play Again');
+    this.playerBtn = new CanvasButton('1 Player', null, canvasSize / 2, buttonHeight * 0.5, buttonHeight*2, buttonHeight/2);
     this.mvmtButtons = {};
-    this.mvmtButtons["B_UP"] = new CanvasButton('/\\', null,
-      canvasSize * 4 / 5, canvasSize - 3 * buttonHeight, buttonHeight, buttonHeight);
-    this.mvmtButtons["B_DOWN"] = new CanvasButton('\\/', null,
-      canvasSize * 4 / 5, canvasSize - buttonHeight, buttonHeight, buttonHeight);
+    this.mvmtButtons["A_UP"] = getCircleBtn('/\\', null, buttonHeight, canvasSize - 2.2 * buttonHeight, buttonHeight);
+    this.mvmtButtons["A_DOWN"] = getCircleBtn('\\/', null, buttonHeight, canvasSize - buttonHeight, buttonHeight);
+    this.mvmtButtons["B_UP"] = getCircleBtn('/\\', null, canvasSize - buttonHeight, canvasSize - 2.2 * buttonHeight, buttonHeight);
+    this.mvmtButtons["B_DOWN"] = getCircleBtn('\\/', null, canvasSize - buttonHeight, canvasSize - buttonHeight, buttonHeight);
 
     this.resetGame();
   }
@@ -19,6 +20,17 @@ class Game {
     this.playAgainBtn.isActive = false;
     this.paddleA = new Paddle("left", this.players < 2, this.AIType);
     this.paddleB = new Paddle("right", this.players < 1, this.AIType);
+    for (var btnk in this.mvmtButtons) {
+      this.mvmtButtons[btnk].isActive = false;
+    }
+    if (this.players > 0) {
+      this.mvmtButtons["B_UP"].isActive = true;
+      this.mvmtButtons["B_DOWN"].isActive = true;
+      if (this.players > 1) {
+        this.mvmtButtons["A_UP"].isActive = true;
+        this.mvmtButtons["A_DOWN"].isActive = true;
+      }
+    }
     this.nextPoint(0);
   }
 
@@ -44,6 +56,13 @@ class Game {
   }
 
   update() {
+    if (keyIsDown(87) || this.mvmtButtons["A_UP"].isPressed) {
+      this.paddleA.dir = -1
+    } else if (keyIsDown(83) || this.mvmtButtons["A_DOWN"].isPressed) {
+      this.paddleA.dir = 1
+    } else {
+      this.paddleA.dir = 0
+    }
     if (keyIsDown(UP_ARROW) || this.mvmtButtons["B_UP"].isPressed) {
       this.paddleB.dir = -1
     } else if (keyIsDown(DOWN_ARROW) || this.mvmtButtons["B_DOWN"].isPressed) {
@@ -77,6 +96,7 @@ class Game {
     this.paddleB.draw()
     this.ball.draw()
     this.playAgainBtn.draw(mouseX, mouseY);
+    this.playerBtn.draw(mouseX, mouseY);
     this.drawGameOver()
   }
 
@@ -110,11 +130,11 @@ class Game {
   mousePressed() {
     if (mouseButton === LEFT || touches.length == 1) {
       this.playAgainBtn.possibleClickDown(mouseX, mouseY)
+      this.playerBtn.possibleClickDown(mouseX, mouseY)
 
       for (var btnk in this.mvmtButtons) {
         this.mvmtButtons[btnk].possibleClickDown(mouseX, mouseY);
       }
-      console.log("mousePressed")
     }
   }
 
@@ -122,6 +142,11 @@ class Game {
   mouseReleased() {
     if (mouseButton === LEFT || touches.length == 0) {
       if (this.playAgainBtn.isClickUp(mouseX, mouseY)) {
+        this.resetGame();
+      }
+      if (this.playerBtn.isClickUp(mouseX, mouseY)) {
+        this.players = 3 - this.players
+        this.playerBtn.txt = str(this.players) + " Player"
         this.resetGame();
       }
 
