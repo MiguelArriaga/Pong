@@ -1,5 +1,5 @@
-function getCircleBtn(text, clickFunction  ,x,y,w){
-  let cb = new CanvasButton(text, clickFunction,x, y, w, w)
+function getCircleBtn(text, clickFunction, x, y, w) {
+  let cb = new CanvasButton(text, clickFunction, x, y, w, w)
   cb.isCircle = true;
   return cb
 }
@@ -54,7 +54,7 @@ class CanvasButton {
 
   contains(px, py) {
     if (this.isCircle) {
-      if (Math.pow(2*(this.x-px)/this.w,2)+Math.pow(2*(this.y-py)/this.w,2)<=1){
+      if (Math.pow(2 * (this.x - px) / this.w, 2) + Math.pow(2 * (this.y - py) / this.w, 2) <= 1) {
         return true;
       }
     } else if (px > (this.x - this.w / 2) &&
@@ -62,7 +62,7 @@ class CanvasButton {
       py > (this.y - this.h / 2) &&
       py < (this.y + this.h / 2)) {
       return true;
-    } 
+    }
     return false;
 
   }
@@ -81,7 +81,7 @@ class CanvasButton {
       return (this.isActive && this.contains(px, py))
     }
   }
-  
+
   click() {
     throw "Error: Click function not implemented for button: " + this.txt;
   }
@@ -104,9 +104,9 @@ class CanvasButton {
       if (this.isCircle) {
         ellipseMode(this.mode);
         ellipse(this.x, this.y, this.w);
-      }else {
-      rectMode(this.mode);
-      rect(this.x, this.y, this.w, this.h);
+      } else {
+        rectMode(this.mode);
+        rect(this.x, this.y, this.w, this.h);
       }
       fill(ctext);
       noStroke();

@@ -10,9 +10,9 @@ function setup() {
   paddleWidth = canvasSize / 50;
   ballSize = canvasSize / 25;
   buttonHeight = canvasSize / 10;
-  ballSpeed = canvasSize/100;
+  ballSpeed = canvasSize / 100;
   // ballSpeed = canvasSize/350;
-  paddleSpeed = ballSpeed*1.5;
+  paddleSpeed = ballSpeed * 1.5;
   createCanvas(canvasSize, canvasSize);
   game = new Game(1)
 }

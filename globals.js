@@ -1,7 +1,7 @@
 // Constants
 let canvasSize
 let paddleLength
-let paddleWidth 
+let paddleWidth
 let ballSize
 let buttonHeight
 let ballSpeed

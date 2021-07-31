@@ -29,8 +29,8 @@ class Paddle {
 
   colided(y, d) {
     return ( // Using d is not a bug. With d/2 has issues in corner cases.
-      (y + d/2 > this.y - this.paddleLength / 2) &&
-      (y - d/2 < this.y + this.paddleLength / 2)
+      (y + d / 2 > this.y - this.paddleLength / 2) &&
+      (y - d / 2 < this.y + this.paddleLength / 2)
     )
   }
 
