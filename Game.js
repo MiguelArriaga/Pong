@@ -137,11 +137,12 @@ class Game {
   }
 
   mousePressed() {
-    if (mouseButton === LEFT || touches.length == 1) {
+    let touchl = touches.length
+    if (mouseButton === LEFT || touchl == 1) {
       this.singlePress(mouseX, mouseY)
-    } else if (touches.length > 1) {
-      for (var tch of touches) {
-        this.singlePress(tch.x, tch.y);
+    } else if (touchl > 1) {
+      for (var i in touches) {
+        this.singlePress(touches[i].x, touches[i].y);
       }
     }
   }
